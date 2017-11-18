@@ -17,12 +17,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+const PORT = process.env.PORT || 80;
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/front_weather_app/build/index.html'));
 });
-
-
 
 app.post('/weather', function (req, res) {
   sql.insert(req.body)
@@ -38,4 +37,4 @@ app.delete('/weather', function (req, res) {
 
 
 
-app.listen(8080)
+app.listen(PORT)
