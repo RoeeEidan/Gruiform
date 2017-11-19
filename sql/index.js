@@ -6,13 +6,26 @@ const Weather = require('./Weather.js');
 const client = new Client();
 client.connect();
 
-
 class Sql {
+    constructor() {
+        // Checking if thers our weathers table exists, and if it doesnt creat it.
+        const query = knex.schema.createTableIfNotExists('weathers', function (table) {
+            table.increments('id').primary();
+            table.text('city');
+            table.text('wind');
+            table.text('descrip');
+            table.text('img');
+            table.float('temp');
+        }).toString();
+
+        client.query(query)
+            .catch(e => e)
+    }
 
     insert(data) {
         const weather = new Weather(data);
         if (weather.err) { throw `err` }
-        const query = knex('Weathers').insert(weather).returning('*').toString();
+        const query = knex('weathers').insert(weather).returning('*').toString();
         return client.query(query)
             .then(data => data.rows[0].id)
             .catch(e => e)
@@ -22,7 +35,7 @@ class Sql {
         const weather = new Weather(data);
         if (weather.err) { throw `err` };
 
-        const query = knex('Weathers').where(weather).del().returning('*').toString();
+        const query = knex('weathers').where(weather).del().returning('*').toString();
         return client.query(query)
             .then(res => true)
             .catch(e => false)
@@ -33,14 +46,3 @@ class Sql {
 const sql = new Sql();
 
 module.exports = sql;
-
-
-
-
-
-// knex({ z: 'table', b: 'table' })
-// .select({
-//   aTitle: 'city',
-// })
-// .whereRaw('?? = ??', ['a.column_1', 'b.column_2'])
-
