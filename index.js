@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8081;
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/front_weather_app/build/index.html'));

@@ -1,6 +1,6 @@
 
 const { Client } = require('pg');
-const knex = require('knex')({ client: 'pg' });
+const knex = require('knex')({ client: 'pg' }); 'ec2-user@ec2-34-208-185-237.us-west-2.compute.amazonaws.com/5432'
 const Weather = require('./Weather.js');
 
 const client = new Client();
